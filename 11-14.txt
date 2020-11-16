@@ -1,0 +1,101 @@
+11/14
+cpu를 많이쓰는 이유 - cpu 1개당 메모리 1개를 더 쓸 수 있으니까
+cpu를 2개가 아닌 4개를 사용하면 - 실행중에 cpu1개를 뺄 수 있다.
+
+메인보드 자체에 있는 랜카드 - lan on motherboard -LOM
+서버를 구매할 때 10G 정도 랜카드를 사는것을 추천
+ILO - 서버가 꺼져있어도 원격으로 서버를 조정하는 방법
+서버는 1년마다 라이센스를 사야함 
+VJ캐이블을 사용해야함
+\\\\\\\\\\\\\\	HP DL 380 jen8
+
+virtualization technology -> enable
+vt-d -> enable
+
+advenced option
+sr-iov -> enable
+
+f10키 눌러서 설정 종료
+
+laid 설정
+
+ilo설정 (하기전에 ip 부여해줘야함)
+
+서버는 기본적으로 빨리 부팅되지 않으니까 기다려라
+1. configure management -> ilo setting 하고 원격으로 접속해라.
+2. ilo setting 에서 포트 연결 한 후
+3. access settings -> 
+4. user administration -> edit -> password 지정 
+5. network setting -> ipv4 -> check 풀고 -> 수동으로도 지정 가능 -> exit
+6. laid controller -> 설정 -> smart array ->
+7. config -> clear configuration -> arrays 에 아무것도 없는것 확인, unassigned Drives -> 몇가지가 있는지 확인
+8. sata ssd 모두 선택 , creat array 선택 -> raid level = raid1 , 나머지 default -> create -> yes -> finish
+9. select 3개만 선택 하고 r=-> raid 5 선택 -> manage spare -> driver 선택 -> 그러면 됨. 
+10. array 2개 있는거 확인, 부팅 어디서 할 건지 확인
+11.smart array -> set boot controller -> c 드라이브로 확인 -> logical drive 1 으로 privary선택
+12. 지정한 ip로 이동-> login -> remote console -> webstart -> lunch 선택
+13. jre 로 접근 후 shutdown 선택 -> p
+ower switch 선택해서 다시 켜보는 거 확인
+14. vertual  drive -> iso 파일 넣어주면 됨 
+15. hp dl 380 support os 들어가서 지원하는 os 확인 해야함-> gen8 dl380p gen8 server
+16. 뭘로 부팅할건지뜸. cdrom 1번으로 들어가서 확인 , esxi 6.7버전을 사용해서 부팅하라는 명령어 사용
+17. 가상화 os 가 중요함..
+17-1 os 설치 할때 virtual device 설정할때 속도가 느리면 ehthornet 으로 직접 연결을 한 후에 ip 를 같은 대역으로 설정
+그 후에 wifi 꺼주고 ethernet 사용 안함 -> 사용함 으로 바꾼후 192.168.0.29로 접속해서 os 설치하면 굉장히 빠름
+
+18. os 설치 한 후에 , c 드라이브로 설정 -> 걍 설치 계속하면됨
+
+19. ip setting 
+password , ip , ssh 설정만 가능 ( os에서 부팅 한 후에 setting 들어가면)
+여기서 f12번키는 restart , f2번 키를 누르고 들어감
+root 에 password 넣고 들어가면 bios 설정이 나옴
+맨위에 password 있고 3번째 보면 ip 바꾸는게 나옴
+management network 들어가서 , lan 카드 확인 하면 4개가 나옴
+4개를 다 쓰겟다가 아니고 , 그중 1개를 접속 할 수 있게 한다. 1개만 설정 하고 엔터 
+밑에 ipv4 세팅 에 들어가서 ip를 설정하면 됨 , ilo에서 설정하면 됨 gateway 는 192.168.0.1번으로 설정
+dns config 들어가서 dns는 8.8.8.8, 8.8.4.4 설정 해주면 됨 , hostname 설정 하면 됨(ex jh-exsi-01)
+esc 키 누르고 y누르면 저장이 됨
+ip 가 제대로 되어 있는지 확인 후에 esc 키 눌러서 나오면 바껴있음
+http 로 들어가면 접속이 가능함(웹페이지 에서)
+ilo에서 접속 되어있는거 빼고 lan1번에 넣어준다.
+그 후에 30초 정도 기다리고 연결을 하면 가능 하다.
+접속하면 vm 뜨고 root 에 password 넣어주면 가능 핟.
+ilo - 192.168.0.107
+vm = 192.168.0.207
+
+
+------------------------------------------------------------
+esxi 설치 되어 있는 server 를 exsi host 라고 한다.
+baremetal server (아무것도 안되어있는 상태의 server[os도 없고, hypervisor 도 없는])
+
+-----------------------------server 에 가상 머신 올리는 방법 -----------------------------
+http접근 해서 vm 접속 -< 가상 시스템 -> 가상 머신 생성 -> 이름 , 게스트 운영 체제 제품군 선택
+-> iso 파일 선택 -> 윈도우나 서버 선택 -> 서버 슽토리지 선택 -> 메모리 cpu선택 -> 해서 새로운 가상 머신 생성
+눌르고 선택 -> 콘솔 -> 브라우저에서 콘솔열기 or 새창에서 콘솔열기 
+가상 머신인 데 부티 ㅇ안됨 -> cd rom 을 넣어야 해서 안됨 -> 데이터 스토어에 저장해야 함
+스토리지 에 가보면 ssd 가 하나가 있음, 거기서 새로운 폴더를 만든 후, iso 파일을 업로드 하면 가능
+무선이라서 한참 걸릴 수도 있음.....
+
+-----------------핸드폰으로 사용  하는 방법
+vspheer mobile 다운로드 
+
+----------------------------------------------------
+서버를 중앙관리하는 v-center 설치
+vcenter 1대가 2500대의 서버를 관리할 수 있고, 가상머신 40000대를 관리 할 수 있음.
+ 
+vcenter 좋은 기능
+- v motion 이 가능 ( vm 을 서버에서 서버로 운영중인 상태로 이동 시킬 수 있으며, ip도 편하게 할 수있음)
+- inter contimental v motion ( 서울에서 일본서버까지 vm을 왔다 갔다 할 수 있음 % 비쌈%)
+
+vcenter 접속을 하려면 vspheer client 로 접속 해야함
+dns 로 연결을 해야하는데 dns  서버가 없다면 aws ec2에 dns서버를 올릴 수 있음.
+
+
+
+-----------------------네트워크
+vswitch 1개를 사용해서 lan카드와 2중화 연결을 하였을때
+vswitch 1개를 더 사용해서 lan 카드와 2중화 연결을 하여
+4개의 lan카드를 다 사용할때, lan카드에 upspring 설정을 하여서 외부 스위치를 통해 통신이 가능한지 확인
+
+aws에서 방화벽 설정을 해줄때 -> nat 인스턴스 만들때와 비슷하게 생성을 해야함 (source destination 체크 해제)
+

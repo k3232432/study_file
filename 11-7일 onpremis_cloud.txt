@@ -1,0 +1,201 @@
+11/7
+
+
+
+실제 면접을 볼때 용어에 대한 질문을 많이 하는데 그에따른 용어정리가 되어 있어야함
+
+예)
+온프레미스가 무엇입니까
+클라우드는 무엇입니까
+클라우드의 장점은 무엇입니까
+
+※용어 정리
+on-premise = 내 소유의
+cloud = it 에 관련된 모든 서비스를 언제, 어디서나 네트워크를 통해서 빌려주는 서비스
+provisioning = 고객의 요청에 따라 바로 사용할 수 있도록 준비해놓는것
+웹(www)의 아버지 = 팀 버너스리
+데이터 센터 = 서버를 24시간동안 가동하기 위해서 사용되는 공간
+sever = 서비스를 제공해주는것 (it 에서의 server[하드웨어] = 24시간 구동가능한 장비+가상화) {대표 3사 : DELL, HP, IBM} #hci용어 알아보기
+
+
+※약어 정리
+ip = internet protocol
+tcp = transmittion control protocol
+udp = user datagram protocol
+eni = elastic network interface ( ec2 네트워크 lan 카드)
+ena = elastic network adaptor (ec2 네트워크 adaptor)
+efa = elastic file adaptor(ec2 파일 어뎁터)
+hba = host based adaptor(storage 연결)
+
+
+1)
+클라우드와 온프레미스 차이점
+on-premise		<->		off-premise(cloud)
+내 소유의 					구독의
+
+onpremise software		<->		cloud software
+라이센스를 사고				라이센스도 빌리는 형태
+설치를 직접 해야함				(BYOL[bring your own license])본인이 가지고 있는 라이센스를 쓰겠다
+
+onpremise backup		<->		cloud backup
+등등
+
+2) 클라우드의 장점
+2-1) 빠른 provisioning  - 빨리 만들어서 사용가능하다
+2-2) 초기 도입비용이 없다
+2-3) 전세계에 어디든 만들 수 있음
+
+3) 클라우드의 단점
+3-1) 비쌈 ex) s3 (2TB 올리는건 무료 1개월 유지 비용 : 10만원 , 1년 유지비용 : 120만원 , 다운받는데 드는 비용 : 120만원)
+3-2) 비용 예측이 불가능하다	※msp 직무에서 클라우드 비용을 말 할때 7%를 더 부름
+3-3) 
+
+4)
+
+※1974 tcp/ip 등장 -> 1993 www등장 -> 1995 야후 등장 -> 1998 google 등장 -> 1999 네이버, 다음, 인터넷뱅킹 등장 -> 2009 아이폰(스마트폰) 등장, VM등장, cloud등장
+
+
+# 2009년에는 server, network, storage 를 다 합쳐서 converged infrastructure 를 사용했었음 (케이블만 꽂으면 사용 가능 하게끔 나왔음)
+# 뉴타닉스 라는 회사에서 위에서 말한 합친 것들을 자연적으로 연결해주는 hci 를 만듬
+# 최근에는 private cloud 와 public cloud를 합친 hybrid cloud 가 유행하게 됨
+# vmware on aws 라는 전략이 나오게 됨 
+# ms 는 azure stack 를 밀고 있음. # sk 는 azure 를 사용한다고 함
+# 서버를 1,2대 사용할 거면 azure stack 를 사용하면됨
+# aws는 서버에 amazon 을 만들 수 있게 aws outpost(onpremise 를 aws로 바로 만들어줌) 를 만듬
+# 신한은행, 국민등aws outpost 를 다 만들어 놓음
+# tower 형 , lack 형, blade 형, module 형 (서버)
+# vxrail or simplivity, u(new)tanix 찾아보기 
+# server 구조
+# hvm 이 뭘까
+# server 에 cpu 인 xeon 은 뭘까
+# vmware = esxi , linux = kvm , xen = xen server  , ms = huper-v 
+# 정보를 받을때 data/tcp,udp/ip/eth 형식으로 받는데 lan카드 를 사용하면 data 를 제외한 나머지를 한번에 받을 수 있음
+# internet 에서 들어올때 ethernet(tcp, udp) , 서버에서 스토리지로 이동 FC
+# ethernet 10mbps -> 100mbps -> 1gbps -> 10gbps -> 25gbps -> 40gbps -> 50gbps -> 100gbps
+# fc  1gbps -> 2gbps -> 4gbps -> 8gbps ethernet 에 비해 느려져서 ethernet 으로 변경됨 -> FCoE -> CNA(conversed network adaptor) -> DCB(data center based)
+# ethornet => CNA 이다
+# infiny band 가 나옴 hca를 사용하는 \가상화 클라우드에서는 hca 가 필수적임\
+# 가상화는 항상 64bit 로 되어야함 - > trap&binary translation (여러개의 os를 올리기 위해서)
+# i3, i5, i7 -> cpu한켠에 가상화가 가능하게 한 부분이 생김
+# nehalem 아키택처, (i3, i5, i7, xeon5500, e5)
+# hvm = 하드웨어 가상화 , ena = 이더넷 네트워크 어뎁터  
+#
+
+	 guest os
+-------------------------------abstraction layer
+	hypervisor
+   	  host os (esxi, kvm, xen, hyper-v)
+	    h/w  
+
+
+# vm = 물리적인 컴퓨터를 소프트웨어적으로 분류해주는것 (실체 = 파일들로 이루어져 있음)
+# vm = 표준 = ovf 로 통일 되게 됨 (esxi = vhdk , hyper-v = vhd 니까 통일 시킴)
+# ova 라는 게 생김 virtual appliance market이라는 마켓이 생김
+# 개인 노트북 이나 pc를 ovf 로 백업 가능 -> p2v 라고함(physical to virtual)
+# v2v (virtual to virtual)
+# 가상화의 장점 : 빠른 provisioning 이 가능
+# ovf 를 아마존에서는 ami 라고 부름(amazon muchine image)
+type-1 hypervisor (전/반 가상화 = 요즘은 전가상화만 사용 \이유 : h/w가 가상화도 해주기 때문에)
+
+
+
+	hypervisor(esxi, xen, hyper-v, kvm)
+	    h/w
+
+type 2 hypervisor
+
+
+	hypervisor(VMware work station, oracle virtual server)
+	     os
+	    h/w
+
+
+#nested virtualization(중첩 가상화)
+
+
+	esxi
+	xen
+	h/w
+
+#
+ 
+   os  | os | os            (VM)(guest OS)(EC2)
+	cpu ,ram 	   (vh/w)(vnic=eni)
+  -----------------
+   hypervisor, os	   (host OS)
+  -------------------		   | - baremetal server
+         h/w	   (physical Machine)
+      cpu, ram
+
+# 문제가 발생함 1. 보안, 2. 네트워크 구성 엉망, 3. 같은 os가 많이 나오면서 
+# 2011~12 : github, devops 등이 나오게되면서 docker 가 나오게됨
+# 최신기술을 배우고 싶다 -> semina 참석해라... -> 진짜 들을만한 기술은 1시간 or 2시간 정도 밖에 안됨
+# 기술을 배우거나 알 수 있는방법  semina (외국) 들어라
+# 컨테이너 -- 보안에 굉장히 취약하다 , 네트워크 구성 더욱 엉망이 된다.
+# 개발은 paas 하면서 infar 알아야하고, 엔지니어는 infra 에서 paas 영역으로 알아야하는 상황
+# 가상 스위치가 생김 -> 내부의 통신을 외부의 통신과 mapping 해주기 위해서
+
+
+ vm | vm | vm
+switch | switch (vswitch)
+-------------------
+     switch 
+
+
+ex)
+  1.1.1.1	    1.1.1.2       1.1.1.3
+|    vm     |     vm     |       vm       |
+          |        |
+          | 1번  |
+           switch              switch
+	| 2번
+ -----------------------------------
+	     | 3번
+	 switch
+
+1번 : 빠르지만 보안상 문제가 있고, 네트워크가 문제가 된다(과거)
+2번 : 적당한데 보안상 문제가 있다 (최근)
+3번 : 느리다(규약)
+
+# vm 에서 네트워크 속도는 nic 를 공유하기 때문에 네트워크 속도가 느림
+# 이점때문에 과거에는 lan을 1개의 vm마다 1개의 랜카드를 줬음 (표준이 없을때)
+# 그래서 다른방식이 나옴 lan카드는 1개인데 가짜처럼 보이는 lan카드가 1대1매핑을 해주는 형식으로 나옴
+# lan 카드 업체들도 lan카드 가상화를 하기 시작함 이걸 SR-IOV 라고 부름
+# Single Router - Input/Output Virtual  = SR-IOV
+# lan 카드 안에 가상 Vswitch 가 들어가 있는 거임
+
+--------------------------------------------------------
+# 만약 aws에서도 빠른 lan카드를 쓰려면 ENA 를 사용한다 (Enhanced Network Adaptor)
+# 기본적으로 ec2 는 eni 가 장착 되어 있음, but 게임 이나 속도가 빨라야 하면 ena 를 사용한다.
+# ena 를 사용하려면 vm 에서 실제로 드라이버를 설치 해야함
+# 기존에 eni 로 설정 되어 있는데 실제 host 네트워크 드라이버를 사용해서 써야할 때는 ena 로 vm 에 들어가서 드라이버 설치를 해줘야 한다.
+# path throw - 실제 장치를 가상머신이 직접 사용 할 수 있어서 좋음 (성능이 그대로 쓸 수 있어서 좋으며, lan카드를 따로사용하면 보안적인 측면에서도 좋음, but 공유가 안됨)
+# quick pass architecture 찾아보기 (메모리를 직접 꽂음)  장점 :  빠르다. 즉 cpu를 꽂을때마다 memory를 꽂을수 있다. 단점 : cpu를 꽂았을때만 memory가 늘어난다.
+# 누마 (NUMA) 단어 알기
+# 오케스트 레이션 (orchastration) 단어 알기
+# 가상머신의 메모리 멥핑을 하드웨어 cpu /memory controller 가 해준다.
+# 그러면서 hypervisor 는 반드시 cpu가 지원하지 않으면 (memory controller 가 없으면) 지원하지 않는다고 선언함
+# 즉 메모리 컨트롤러 부분을 봐야함(나중에 pc나 notebook살때 [가상화 기술을 사용할 꺼면])
+# intel 에선 VT-x, VTF (가상화를 이용하는 하드웨어)
+# aws enhaced network = ena 를 사용하며, fnq 에서 어떻게 사용하는 건지 확인해야 설치 가능함
+# private cloud 종류 가 있다 찾아 보기로
+# 클라우드 컴퓨팅 안좋은점 -> 교육 비가 많이듬, 많이 알지 못하면 돈을 바가지로 먹을 수 도 있다.
+# 국내 클라우드 회사 (naver cloud = naver cloud , kt = u cloud biz , sk = cloud z , kakao) 정부 프로젝트 가져가려고, 금융회사랑 협업하려고
+# 네이버 동화 읽어주는 거 , ai 와 연동하는거 생각
+# 다른 클라우드와 왔다갔다하는것, ip를 기존에 쓰는것들을 다른 클라우드로 동일하게 사용가능한지 msxx, 
+# 클라우드 busting 이 되었을 때 overdraft 를 할 건지 non overdraft 사용 할 건지 - 멀티 클라우드로 말 할수 있는데 , 하이브리드 클라우로도 사용 가능하기 때문에 정의하기는 어려움
+# 다른곳으로 눈을 돌릴 수 도 있어야 한다. ex) 법률쪽, 병원, 화장품, 차 그룹(분당 or 일산쪽, 차병원, 등등), SM 타운, YG 등등, 게임쪽도 마찬가지, 농업쪽(SmartFarm)
+# 같은 하이퍼 바이저 위에서 통신하는 중 보안을 위해 security group 사용하고, 외부와 통신 하기위해 nacl 사용한다.
+----------------------------------------------------------------------------
+storage
+# 요세는 모듈형으로 많이 나옴
+# 
+
+------------------------------------------------------------------------------
+freetalking
+#농업 쪽으로도 클라우드쪽 괜찮음, lg와 농심쪽에서 진행하고 있음
+
+
+
+
+

@@ -1,0 +1,68 @@
+
+2fd90767ab264fe5964cf2ba42957c02
+
+
+Build Name and Description Setter
+Dynamic Extended Choice Parameter Plug-In
+Extended Choice Parameter
+Extensible Choice Parameter plugin
+Last Changes
+File Operations Plugin
+Build Timeout
+Workspace Cleanup Plugin
+NodeJS
+Maven Integration
+Git
+Gradle
+
+sudo cp -r /복사원본 복사할 위치 : 복사
+
+#################메인 프로젝트
+sudo yum install tree*
+
+1.access key
+AKIAIM3LDYNQ2IDTCQRA
+2.secret key
+dfhhryB/3mQWLEEiTQBZp3Ixx7ljSvOUkOSmol05
+
+play book 디랙토리는 ansible 경로 안에서 진행되는건가?
+일단 진행
+https://tram-devlog.tistory.com/entry/Packer%EC%99%80-Ansible-%ED%99%9C%EC%9A%A9-AMI-%EC%83%9D%EC%84%B1
+이 곳으로 접근해서 디렉토리 생성
+
+filezilla 사용
+
+
+pinpoint
+https://javaworld.co.kr/81
+
+/home/ec2-user/packer-example/playbook
+
+"playbook_file": "/home/ec2-user/packer-example/playbook/main.yml"
+
+$ export AWS_ACCESS_KEY_ID="AKIAIM3LDYNQ2IDTCQRA"
+$ export AWS_SECRET_ACCESS_KEY="dfhhryB/3mQWLEEiTQBZp3Ixx7ljSvOUkOSmol05"
+$ export AWS_DEFAULT_REGION="ap-northeast-2"
+
+ PACKER_LOG=1 packer build packer-example/example.json
+
+nginx 설치가 안되는데 ami선택한게 문제인것 같음 amazon-extra-linux를 사용해야하는데 yum 말고는 어떻게 사용하는지 모르겠음
+
+=========================================
+jenkins github connect
+jenkins ssh tokken
+4871e23824fc79073152b88b06182a87e1ec1e32
+
+
+jenkins 설정 -> globalconfiguration -> git 설치 path 확인
+
+git repository 할때 readme.md 만들기 하지말고 (하면 origin/main 으로 경로 생성되서)
+그냥 repo 만들고 local pc 와 push 해서 파일 올린후에 jenkins | new project 에서 새로 만든 repo url 넣어
+서 build 하면 됨 [branch 경로 확인 잘해 볼것]
+권한 설정을 jenkins:jenkins 로 설정해놨는데 할 필요 있는지 없는지 확인 해야함
+
+3.35.10.33
+
+userID 에 "k3232432@naver.com"을 입력을 했는데userID가 잘못 되어 있음
+
+그리고 host 가아니고 hosts 석용 해야됨

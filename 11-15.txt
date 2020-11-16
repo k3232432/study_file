@@ -1,0 +1,136 @@
+*************************************************
+esxi 6.7
+vcenter 6.7
+windows 2019
+fortifate f/w(방화벽)
+
+--포멧을 하는 이유
+효율성, 보안, 
+VMFS - vm 에서 사용 하는 파일 시스템 , 
+두가지의 운영체제가 하나의 데이터 공간을 사용하는것 -> cluster file system (병렬처리 시스템)
+hdoop  시스템 -> 클러스터 파일 시스탬 hdfs
+google file system -> 클러스터 
+gpfs
+luster
+vmfs
+데이터 스토어 : 데이터가 저장될 준비가 되어 있는 상태
+hdd -> vmfs 로 포맷을 해야 데이터 스토어로 인식을 함
+ 
+윈도우 는 ntfs 로 포맷함
+
+
+******************************************************
+ssh 작업 사용
+http 접근 , 작업 -> 서비스 -> ssh작업 
+sftp 로 접근, -> 만든 폴더에 파일 넣어주기 
+-----------------------------------------
+
+windows 서버 들어와서 
+vm tool 마운트 한후에 cd/rom 드라이브에 vmtool 있는거 확인하고 설치하기
+
+
+rdp를 appstore 에서 다운로드 받고, 
+window server 에서 내컴퓨터 - proporties -> remotepennel -> 수락 한 후에
+app 에서 add desktop 한후, ip넣어주고 administrator , password 기입 하고, connect 하면
+핸드폰에서도 원격으로 연결 가능 , but 같은 네트워크에서만 가능
+
+---window server volum 늘리는 방법
+1. esxi 에서 설정 -> 40G 에서 70G 로 바꾼 후에 , -> window server 로 들어와서 server mangement 들어가서
+ tools 에 computer management 들어간 후에 disk management 들어간 후에 c: 드라이브에 오른쪽 마우스
+extend volume 선택
+
+
+--------window server firewall 
+1. window server 에서 server management 들어가서 
+local server -> ie enhanced security configuration 을 on 되어 있는거 off 로 설정 변경 하면 방화벽
+이 꺼짐
+
+-------window server 배우는 방법
+www.monster.com 들어가서 singapor 로 지역 선택하고
+window server 검색
+해보거나 해외 업체 ex ) aws 검색하면 
+aws 에 취업하기 위해 필요한 조건들이 나오고 최소 필요한 직무들을 할 수 있음
+
+-----------------vm shared storage
+가상머신의 vmfs 를 공유하는 중앙관리 스토리지 이름
+
+---------------------thin provisioning
+가상으로 저장공간이 있다고 말하며 가짜로할당 해주는 방법
+
+thick provisioning 
+장점 : 데이터의 안정성, 초기디스크 설정이 빠르다
+단점 : 저장공간의 낭비가 있을수 있다.
+thin provisioning
+장점 : 저장공간의 낭비를 줄일 수 있다.
+단점 : 초기디스크 설정이 느림, 지속적으로 모니터링을 해줘야 함
+
+over commit - 기존에 있는 수치보다 넘겨서 가상 저장공간을 지정함
+
+기본적으로 hdd 를 자주 읽고 자주 사용하는 데이터 베이스를 사용하면 -> thick provisioning을 해줘야함
+hdd 를 자주 읽지 않는 , 잠깐 사용하다 말 정보는 -> thin provisioning을 해주면 됨(ex: test용등으로)
+
+--------------공인 ip 확인 your-ip-address.com
+rapa 가산 = 58.127.185.188
+
+-----------------인터넷 통신속도 확인
+speedtest.net
+
+------------------------------------------
+hdd가 집에있다 하고, 내pc가 외부에 있을 때 
+hdd를 pc로 가져오면 편하니까 ip로 iscsi를 통해 통신을 하는 방법이 있음.
+
+-----------window server 에 웹사이트 올리는 방법
+server manager 에서 add roles 들어간 다음 next , iis 선택 후 next 계속누른후 install 하면 설치가 완료됨
+후에  내컴퓨터->c: --> wwwroot 에 서 html 파일 확인 가능
+
+---------window server 에 iscsi 올리는 방법
+sever manager 에서 add roles 들어간 다음 next , next 
+files and storage service 선택 , 하위 폴더의 iscsi 선택 후 하위 폴더에서 iscsi target 선택 후 next , install
+그러면 server manager  에 file and storage service에 하위 iscsi 라는게 생김 거기에 들어가서
+new iscsi virtual disk 를 선택한 후에 디스크 저장공간 설정 후, target 설정 (개인 pc ip를 설정)
+한 후에 저장하고 나오면
+개인 pc에서 iscsi servicer 를 사용하면 window server ip로 연결하면 iscsi 와 연결 되는 것을 
+확인
+후에 파일->오른쪽위의 컴퓨터 관리 -> 저장장치 에서 -> 새 볼륨 선택후 사용 -> 경로지정(ex: d:)
+
+
+----------------fortigate 배우는것도 굉장히 좋음
+1. vm 생성/ 등록
+2. ovf 선택
+3. fortigate 3가지 선택
+4. 실행
+--------------------fortigate 사용하기 위해 (방화벽으로 사용하기 위해)
+1. vswitch 생성 해줘야함
+-(http) 네트워킹
+- 가상스위치 - 표준 가상 스위치 추가 이름 적고, 업링크 1에 3번으로 넣어줌
+- 포트그룹 -> 포크그룹 추가 , 이름 적어주고(external), 만든 가상스위치를 넣어줌(internet~~)
+- window server 에서 편집-> 네트워크 어뎁터를 external 로 바꿔줌) 
+
+
+2. vswitch 하나더 만들어서 internal 로 만들고 외부 lan카드 와 연결은 안해줘도 되고
+포트 그룹을 만들고 만든 스위치의 업링크는 없는걸로 해놓은후
+fortigate 에서 포트1 번은 업링크 없는것과 연결 포트 2번은 스위치 업링크 연결된것과 연결
+window server는 업링크가 없는 internal 과 연결
+
+window server ip 설정
+172.16.0.~
+dns 8.8.8.8
+dns server 8.8.4.4
+
+fortigate 실행
+실행후 엔터 , admin , 엔터 하면 새로운 password 설정하라는 말 나옴
+root1234! 기존에 했던걸로 했음 .. 하고 비밀번호 넣으면  welcome 나옴
+
+show system interface ? 하면 됨(그럼 포트당 ip를 확인할 수 있고, port 2번에는 ip를 설정해줘야
+하마, 띄어쓰기 조심)
+
+config system interface
+edit port2
+set ip 172.16.0.1 255.255.255.0 
+set allowaccess ping http https ssh
+end
+해서 나오면 됨
+
+
+
+
