@@ -131,7 +131,10 @@ port-group
 kernel port
 
 paas 쪽으로 가게되면 2중화가 걸리게 되면서 네트워크 부분이 꼭 필요하게 되는 부분임
-
+11/17일자로 확인 해야하는 점
+1. hypevisor  종류
+2. linux 시스탬 정리
+3. 랙들어와서 private cloud - openstack 이용
 
 
 
