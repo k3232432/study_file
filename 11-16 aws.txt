@@ -1,0 +1,57 @@
+aws 볼륨 생성 ec2 에 연결 하는 방법 알아보기
+
+linux 키페어 분실시 교체하는 방법
+
+/home/ec2-user/ .ssh /Authorized 키 있음
+이거바꿔주면됨
+
+puttygen 을 이용해서 pem file 넣고 private key , public key를 만들고 aws 에는 public key를 넣고
+외부에서 접근을 할 때에는 private key를 사용해서 넣어주면됨
+
+만든 public key 를 가지고 aws 에 keypair 에 들어가서 public key  넣어주면 됨
+그 후에 putty 를 이용해서 private key 를 사용해서 들어갈 수 있는지 확인
+
+리눅스는 키를 동일하게 갖는것이 좋음
+윈도우는 키를 개개인으로 주는 것이 좋음
+
+linux ami = ec2-user
+centos = centos
+devian = admin or root
+등등
+
+bootstraping 이란
+사용자의 동의 없이 일련의 동작을 수행한다.(일련의 과정을 수행함)
+ex) ec2 에 사용자 데이터를 추가 할 수있고, meta data 도 넣어줄 수 있음.
+
+윈도우 같은 경우에는 원격 데스크톱 연결을 통해서 접속
+
+메타데이터 확인 가능
+
+linux- curl http://196.254.168.254 ~~머시기머시기
+
+태그를 다는것도 확인 해야함 꼭 달아줘야 하긴 함
+
+
+dedicate instance , dedicated host 가 있음
+
+cluster 배치 그룹 = 배치그룹 을 지정 할 수 있음 ec2 끼리 통신을 할 때 같은 구역에 있으면 통신이 빠르고 
+partition 배치 그룹 = ec2를 분산해서 놓으면 기본 하드 웨어를 공유하지 않아도 되기때문에 여러 ec2 를 가지고 여러곳의 구역에 배치하는 방법
+spread 배치 그룹 = ec2 를 각 각 분산 해서 놓으면서 한 ec2가 장애발생시 다른 ec2는 방해 받지 않기때문에 독립성과 안정성이 있음
+
+host name 설정 하는 방법 알아보기
+utc - 꼭 시간설정 맞춰주기
+ntp 가 뭔지 알아보기
+window일때 = password 사용 해야하고 한글 사용할 수 있게 만들어 줘야하고
+
+비주얼 패러다임 이라는 사이트 가 굉장히 좋음
+
+ebs 선택한 후에 region , avility zone 을 선택 할 수 있음
+보통  gib 형식으로 gibibyte 형식으로 되어 있는데 이 부분에 대한 이해도가 필요함
+
+bastion host
+터널링만 이쁘게 해놓으면 괜찮다
+
+EBS 
+장점 : 블록 기반으로 다른 저장 장치보다 좀더 빠르다
+단점 : 한계가 있고, 용량에 따라 IOPs 가 달라진다.
+
