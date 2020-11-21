@@ -1,0 +1,166 @@
+### 책 : 생초보 네트워크 
+## NW 설계 구축
+
+1. Topology
+2. 장치(router, switch)
+3. bandwidth
+4. 솔루션들
+
+# 7계층
+7 - APPLICATION
+6 - APPLICATION
+5 - APPLICATION
+4 - TRANSPORT
+3 - NW
+2 - DATALINK
+1 - PHYSICAL
+
+#  창의성 < 안정성
+    risk    1.모범
+            2.모델
+
+            3 layer 구조 (topology) | 91p
+            core layer : 각 사이트
+            distribution layer : 각 건물
+            access layer : 각 층 : 단말들(단말기 등이 연결됨)
+
+            ※단말 : app이 깔리는 7계층 장비
+
+예제 : 7층짜리 건물 5동이 있고, 11층 2동있는 건물끼리 네트워크 연결을 할 때
+필요한 access switch, distribution router, core switch 의 갯수를 구하여라
+
+: access switch = (7층 x 5동) + (11층 x 2동)
+  distribution router = 5동 + 2동
+  core switch = 1개
+
+미니 문제 : 93p
+
+L3 스위치 - 라우터 
+
+2layer 계층 
+- 3layer 계층에 core layer 를 뺀 것
+- core 계층의 switch 가 없기때문에 router가 core계층의 역활을 해준다.
+- 
+
+## NW 설계 구축 변경 기준
+- 소유자 기준
+1. 비용
+
+- 사용자 기준
+2. 가용성(24시간동안의 구동율)
+3. 속도
+4. 보안성
+
+- 관리자 기준
+5. 관리 용이성
+
+# 티어드 3 레이어 모델과 티어드 2 레이어 모델 비교
+구분    티어드3 레이어 모델     티어드 2 레이어 모델
+
+비용           나쁨                     좋음
+
+가용성         좋음                     나쁨
+
+성능           좋음                     나쁨
+
+# switch 와 router 의 공통점/차이점
+구분                               스위치                                           라우터
+
+공통점                                                       스위칭
+
+차이점                2계층(mac)주소를 보고 스위칭한다.                   3계층(ip)주소를 보고 스위칭 한다.
+
+차이점                      네트워크를 못 나눈다.                            네트워크를 나눌 수 있다.
+
+차이점               (플랫주소로 스위칭 테이블을 만들기 때문에)      (하이어라키컬 주소로 라우팅 테이블을 만들기 때문에)
+                              스위칭 테이블이 길다.                             라우팅 테이블이 짧다.
+
+차이점             (프레임의 목적지 주소가 스위칭 테이블에 없으면)     (패킷의 목적지 주소가 라우팅 테이블에 없으면)
+                                  플러딩 한다.                                        버린다.
+
+차이점                    (브로드 캐스트를 차단하지 못한다.)                    (브로드 캐스트를 차단한다.)
+                        브로드 캐스트 도메인을 나누지 못한다.                  브로드 캐스트 도메인을 나눈다.
+
+
+
+※ 스위칭 = 패킷이 스위치나 라우터에 도착했을 때 목적지 주소를 보고 몇번 포트로 보낼지 결정함.
+
+# UNICAST / BROADCAST
+UNICAST = 단일 통신
+BROADCAST = 전체 통신
+
+BROADCAST 이동 범위 - BROADCAST DOMAIN
+NETWORK 갯수 = BROADCAST DOMAIN 갯수 
+NETWORK 크기 = BROADCAST DOMAIN 크기
+
+# NW 속도
+DOWNLOAD 가 빨라야 한다.
+- 선 - BANDWIDTH (대역폭)
+- 장치 -CPU, MEMORY
+
+## NW LAN 과 WAN
+LAN = LOCAL AREA NETWORK - 좁은지역(직접 구축) 
+WAN = WIDE AREA NETWORK - 넓은 지역(임대|SK,KT,LG등)
+
+WAN 을 받아준는 장치 = WAN ROUTER 
+WAN ROUTER 와 CORE SWITCH 가 연결됨
+
+즉 DISTRIBUTION ROUTER - WAN ROUTER - CORE SWITCH 를 통해서 연결이됨
+
+
+WAN 설계 모델
+- 허브 앤 스포크
+- 풀메시
+- 파샬 메시
+
+
+# 이중화 
+단일 연결을 통해서 네트워크 를 구성했을 때 1개의 router나 switch가 down되면
+네트워크 연결이 끊어지므로, 2중연결을 통해서 장비의 오류나 이벤트 발생시 가용성을 
+유지하기 위해 사용됨
+
+-장점 
+loadbalancing 
+속도
+
+-단점
+비용
+보안
+관리 용이성
+
+# ISP
+internet service provide 
+의 약자로 인터넷 으로 가는 길목을 제공하는 역활을 한다.
+
+AS(Autonomous System)
+-ISP
+-ISP고객
+
+CT나 KT 나 AT&T 인 회사들 (isp제공)이 해저 케이블로 서로 연결이 되어 있음
+우리는 KT를 이용해서 인터넷에 연결해서 사용을 한다. 
+
+# 이더넷
+이더넷 = 속도 측정 기준
+10Mbps
+100Mbps
+1000Mbps
+10000Mbps
+..... 등등
+
+pc - access switch = 10Mbps(100Mbps도 가능하지만 비용측면에서 효율성을 생각해보면 별로임)
+access switch - distribution router = 100Mbps
+distribution router - core switch = 1000Mbps 
+이런식으로 설계를 해야함
+
+# 미니 과제 106p
+
+WAN 설계 모델 종류인 HUB AND SPOKE , PULL MASH , PACHAL MASH (허브앤 스포크, 풀메시, 파샬 메시)에 관하여 더 알아보기
+
+
+
+
+
+
+
+
+
