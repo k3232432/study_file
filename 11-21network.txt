@@ -156,6 +156,204 @@ distribution router - core switch = 1000Mbps
 
 WAN 설계 모델 종류인 HUB AND SPOKE , PULL MASH , PACHAL MASH (허브앤 스포크, 풀메시, 파샬 메시)에 관하여 더 알아보기
 
+### 실습
+2621xm 라우터 선택
+라우터 들어가서 오른쪽 2개 포트 = consol포트
+(명령어 입력할 때 사용)
+왼쪽 2개 포트 = fastethornet 포트
+(100Mbps 정도의 BandWidth)
+
+좌측에 모듈을 볼 수 있는데
+NM모듈 = 큰 슬롯에 장착 가능
+MIC모듈 = 작은 슬롯에 장착 가능
+
+6번째에 있는 NM-2fe2w를 장착하면 됨
+장착 할때 power꺼줘야함
+
+장착하면 port 가 2개가 더 생김
+Fastehornet 2개 추가됨
+우측 부터 
+0번 모듈의 0번 포트
+0번 모듈의 1번 포트
+1번 모듈의 0번 포트
+1번 모듈의 1번 포트
+
+라우터는 ctrl+c ctrl+v 하면 복사됨
+
+## 스위치 선택
+2960스위치 선택
+
+## end device 선택
+필요한 pc 나 end device 선택 하면됨
+
+## 캐이블 선택
+1. 광캐이블
+2. 구리 선(TP:Twisted Pair)
+
+  구분           광           구리
+  비용          비쌈           쌈
+관리용이        별로임        괜찮음
+  거리          수십KM        100M
+ 대역폭         한계가x       100Mbps
+               그외구간       시냇물 구간
+
+구리선(TP)
+8개의 선이 있음
+pc + -> --------
+pc - -> --------
+RT + <- --------
+        --------
+        --------
+        --------
+        --------
+        --------
+
+        연결의 과정에 따라서 staight-thorughot캐이블
+        cross over 캐이블이 있음
+        사용하는 장치 에 따라서 연결선 선택이 달라짐
+# 전원
+router 는 초기에 공장에서 나올 때 off 상태로나옴
+switch 는 나올때 on 상태로 나온다.
+
+초반에 연결 될 때, link pulse를 통해서 장비가 살아 있는지 죽어 있는지 확인을 함.
+keep alive 상태를 확인해서 연결을 한다.
+
+노트북 하나 만들고 consol을 통해서 들어가자
+연결 할 때 consol 을 선택하고 router consol로 연결 하고, pc는 rs232를 통해서 들어가자
+
+노트북에 들어가서
+Desktop 들어가서 terminal 들어가자
+들어가서 ok 누르면 consol 창이 나오고 라우터로 접근이 가능해진다.
+
+cli 연결시
+1) console cable
+2) app(terminal)
+1->8
+2->7
+3->6
+4->5
+5->4
+6->3
+7->2
+8->1
+이런식으로 반대로 연결이 됨
+
+연결 한 후에 off -> on 한 후에
+라우터 에 cli 들어가면 dialog 설정물어봄
+이때 no해주면 됨
+-yes 해주면 기본적으로 설정이 되면서 심도있게 배우기 위해서 no를 선택한거임
+
+Router> 에서 ?를 치면 명령어의 목록을 볼 수 있음
+처음에 ?쳐서 나오는 것들은 간단한 조사 부분이 나옴
+처음에 enable 의 약자 en 을 쳐보면 #으로 바뀌는 것으로 볼 수 있음
+그러고 나서 ? 를 치면 더 자세한 부분에대한 명령어 목록을 볼 수 있음.
+show running-config 라고 치면 
+현재 돌아가고 있는 router 상황을 볼 수 있음
+(간단하게 sh ru 라고 입력 하면 됨(tab키를 누르면 자동 완성 되는 것을 볼 수 있음))
+
+만약에 잘못된 명령어를 작성하면 ex)shooo 를 사용하면 shooo를 도메인 서버에 잇는지 확인하고 그곳으로
+ssh 접근을 하려고 함.
+나오는 방법 -> ctrl shift 6
+
+위 화살표를 누르면 눌렀던 명령어가 자동으로 나타남
+반대로 아래화살표를 누르면 위아래로 명령어를 왔다 갔다 할 수 있음
+
+en 으로 들어와서 configure terminal 라고
+입력하면 설정모드로 들어갈 수 있음
+
+한 후에 ? 를 쳐보면 명령어의 종류를 볼 수 있음
+
+en -> conf t -> interface fastethornet 번호/번호
+하면 해당 인터페이스로 이동가능
+
+## 중간정리
+# 간단 조사
+Router>?
+Router>en
+Router>?
+Router# show running-config
+Router# configure terminal
+# 설정 
+Router(config)#?
+Router(config)# interface fastethornet 번호/번호
+Router(config-if)#? 
+
+#
+인터페이스 들어가서 no shutdown 을 사용하면 포트가 살아나는걸 볼 수 있음.
+
+3계층 - ip 주소 = 
+2계층 - mac주소 = 주민등록 번호
+2계층 장비는 모두 mac주소를 가지고 있다.
+2계층 이상의 장비는 모두 mac주소를 가지고 있다.
+
+# ip주소
+ip + netmask 두개가 한쌍임
+100.100.100|.1
+255.255.255|.0
+-네트워크-|.호스트
+
+hierarchical Address
+1. 우편주소
+2. 전화번호
+3. ip
+
+flat Address
+1. mac주소
+2. 주민등록번호
+3. 등등
+
+스위치 라우터 차이
+1. mac주소를 보냐 , ip주소를 보냐
+2. 네트워크 구별이 가능하냐
+3. 라우팅 테이블의 길이가 긴가 짧나
+
+# subnet mask
+1)255.255.255|.0
+2)11111111.11111111.11111111|.00000000
+3)Prefix-length             /24 
+  nw        
+
+ex)
+10.0.0.0/24
+------|255 255개의 호스트
+10.0.0.0/16
+----|255.255 255*255개의 호스트
+10.0.0.0/8
+--|255.255.255 255*255*255개의 호스트
+
+
+10.0.0.0/24
+로 네트워크를 설정한다고 할 때
+10.0.0.0은 사용할 수 없음
+
+
+## ip 주소 할당 방법
+1)en -> conf t -> int fa 0/0 -> 
+ip address x.x.x.x 255.255.255.0
+이런식으로 넣어주면 됨
+
+## router 세팅 하는 방법
+ip를 지정했으면 routing table 을 만들어줘야 한다.
+방법은 2가지가 있는데
+1. static
+2. dynamic 
+
+static 은 정적으로 관리자가 직접 router를 설정해주는 방법이다. 각각 가지고 잇는 router table에 지정되어 있는 네트워크정보를 입력해준다.
+
+
+dynamic 은 동적으로 관리자가 한번 router를 설정해주면 알아서 router끼리 통신을 통해 서로의ip 대역을 나눈다.
+
+
+NW정보 는 connected 된 네트워크 주소를 입력해주고, 
+
+
+show ip route = route 정보를 알려줌
+
+not connected 와 연결및 통신을 하려면
+routing protocol 을 설정해줘야함
+router eigrp 100
+network 10.0.0.0
+을 입력 해주면 통신이 될것이다.
 
 
 
