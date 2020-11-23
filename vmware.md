@@ -126,7 +126,7 @@ root
 VMware1! 입력 next
 
 vm-name = 이름입력(ex jaeho-vcenter)
-비밀번호 설정 VMware1!
+비밀번호 설정 
 next
 
 network 그대로
@@ -139,4 +139,57 @@ dns server = window server ip (172.16.0.25)
 
  하고 install
  ----------------여기까지 stage1 완료...
- 
+
+
+ ## stage2
+
+stage1 끝나면 continue 눌러서 다음 페이지 들어가야 함.
+next -> next ->
+vcenter는 자체 도메인을 가져야 함. (우리가 생각하는 그런 도메인 말고)
+똑같은 아이디와 도메인을 사용하기 위해 single sign on 도메인을 만듬. 
+서울에 아무 도메인을 만들어 놓고 일본에 만들때 join을 사용해서 묶어주면 하나의 
+아이디와 비밀번호로 사용가능
+
+-> 도메인 입력후 
+vcenter 에서 사용할 password입력 ()
+하고 설치
+
+그런후에 vcenter.jaehotest.net 로 접속하면 vcenter 가 열리는걸 확인할 수 있음
+
+## 접속후
+접속한 후에 
+start with html5 선택
+id = administrator@[지정 dns 이름]
+pw = [vcenter 설치 할 때 사용했던 비밀번호]
+
+### data center 를 만들어 줘야함
+datacenter 만들고
+add host -  개인 esxi ip 넣어줘야함
+하고 물어보는거 나오는데 yes 눌러야함
+
+license
+
+※license 등록 방법 -> home -> administration -> license -> add license 한후
+assign license 해주며 됨
+
+license 는 기존에 있던거 말고 새로 넣어준 license 설정 해주면 됨
+
+**** vmcenter - inventory 를 잘 사용해야 한다.
+**** premission - 모두 admin이 되면 안되기 때문에 폴더를 만든 후에 안쪽에 넣어서 관리 할 수 있다.
+**1. vmcenter 에서는 datacenter 를 반드시 만들어야하는데 폴더 형식으로 관리가 가능하다.
+**2. 폴더중에 가상머신 폴더가 있다. 
+**3. lockdown server 에 ssh 나 직접 모니터와 키보드를 꽂고 들어올 수 있기때문에 그것을 방지하기위해 사용됨
+**4. privilige, role permission
+* privilige = 권한을 말하고, 권한 하나하나를 하나의 역활을 만든것이 role 이며, 이 role 을 사용자에게 주는 데 
+* object에세 어떤사용자에게는 어떤 role을 주라는 것을 할 수 있음 
+* 모니터링 요원들을 통해 모니터링 할 수 있음
+
+--------------------------------------------
+
+## 권한 설정
+menu -> administration -> add user -> 유저를 추가 할 수 있다.
+menu -> cluster -> vcenter.net -> 우클릭, -> permission add 해서 정책 넣어줄 수 있음
+
+## vmware 에서 connet server
+vcenter ip 넣어주고 연결해주면 
+host 컴퓨터에서도 원격으로 조절이 가능함.
