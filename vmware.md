@@ -123,7 +123,7 @@ windows 서버에 cd 넣고 vcenter 올린다 (먼소리지..)
 install 선택
 - license agree 선택, target = 172.16.0.8
 root
-VMware1! 입력 next
+Password 입력 next
 
 vm-name = 이름입력(ex jaeho-vcenter)
 비밀번호 설정 
